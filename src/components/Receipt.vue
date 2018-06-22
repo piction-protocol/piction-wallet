@@ -3,8 +3,7 @@
     <b-card :title="productName">
       <hr>
       <div>참여이더 : {{receipt.etherAmount / Math.pow(10, 18)}} ETH</div>
-      <div>토큰 : {{receipt.amount / Math.pow(10, 18)}} PXL</div>
-      <div>락업 : {{lockup}} day</div>
+      <div>구매토큰 : {{receipt.amount / Math.pow(10, 18)}} PXL</div>
       <b-alert align="center" class="state" show :variant="stateLabelColor">{{stateLabelName}}</b-alert>
     </b-card>
   </div>
@@ -40,16 +39,16 @@
             this.stateLabelName = '환불';
             this.stateLabelColor = 'danger';
           } else if (this.receipt.release) {
-            this.stateLabelName = '발급완료';
+            this.stateLabelName = '지급완료';
             this.stateLabelColor = 'primary';
           } else {
             if (this.criterionTime == 0) {
-              this.stateLabelName = '발급대기';
+              this.stateLabelName = `대기 (상장 ${lockup}일 후 지급)`;
               this.stateLabelColor = 'warning';
             } else {
               let unlockTime = Number(this.criterionTime)
                 + Number(lockup * 24 * 60 * 60 * 1000);
-              this.stateLabelName = `${new Date(unlockTime).toLocaleString()} 발급 예정`;
+              this.stateLabelName = `대기 (${new Date(unlockTime).toLocaleString()} 지급 예정)`;
               this.stateLabelColor = 'dark';
             }
           }
