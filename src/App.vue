@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <h1>Piction Wallet</h1>
+    <div>Token address : {{tokenAddress}}</div>
     <Receipt v-for="receipt in receiptList"
              :key="receipt.order_id"
              :receipt="receipt"
@@ -25,6 +26,7 @@
         account: null,
         criterionTime: null,
         receiptList: [],
+        tokenAddress: null,
         tokenAddress: null
       }
     },
@@ -51,6 +53,12 @@
           })
         });
       },
+      setTokenAddress() {
+        this.contract.methods.getTokenAddress().call((err, address) => {
+          console.log('address', address)
+          this.tokenAddress = address;
+        });
+      },
       setCriterionTime() {
         this.contract.methods.criterionTime().call((err, _criterionTime) => {
           this.criterionTime = _criterionTime;
@@ -60,6 +68,7 @@
     created() {
       web3 = new Web3(web3.currentProvider);
       this.contract = new web3.eth.Contract(abi, this.$root.address);
+      this.setTokenAddress();
       this.setCriterionTime();
       this.getBuyerReceipt();
     },
