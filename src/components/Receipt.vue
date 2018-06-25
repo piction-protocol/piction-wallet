@@ -2,8 +2,9 @@
   <div align="left" class="receipt">
     <b-card :title="productName">
       <hr>
+      <div>구매 ID : {{receipt.order_id}}</div>
       <div>참여이더 : {{receipt.etherAmount / Math.pow(10, 18)}} ETH</div>
-      <div>구매토큰 : {{receipt.amount / Math.pow(10, 18)}} PXL</div>
+      <div>지급토큰 : {{receipt.amount / Math.pow(10, 18)}} PXL</div>
       <b-alert align="center" class="state" show :variant="stateLabelColor">{{stateLabelName}}</b-alert>
     </b-card>
   </div>

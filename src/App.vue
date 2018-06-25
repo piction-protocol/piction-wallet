@@ -2,7 +2,7 @@
   <div id="app">
     <h1>Piction Wallet</h1>
     <Receipt v-for="receipt in receiptList"
-             :key="receipt.product"
+             :key="receipt.order_id"
              :receipt="receipt"
              :criterionTime="criterionTime"/>
     <b-alert v-if="receiptList.length == 0" show variant="primary">
@@ -24,7 +24,8 @@
         contract: null,
         account: null,
         criterionTime: null,
-        receiptList: []
+        receiptList: [],
+        tokenAddress: null
       }
     },
     methods: {
@@ -32,14 +33,16 @@
         this.contract.methods.getBuyerReceipt(this.$root.account).call((err, result) => {
 
           const FIELD_PRODUCT = 0;
-          const FIELD_AMOUNT = 1;
-          const FIELD_ETHERAMOUNT = 2;
-          const FIELD_RELEASE = 3;
-          const FIELD_REFUND = 4;
+          const FIELD_ORDER_ID = 1;
+          const FIELD_AMOUNT = 2;
+          const FIELD_ETHERAMOUNT = 3;
+          const FIELD_RELEASE = 4;
+          const FIELD_REFUND = 5;
 
           result[0].forEach((obj, index) => {
             this.receiptList.push({
               product: result[FIELD_PRODUCT][index],
+              order_id: result[FIELD_ORDER_ID][index],
               amount: result[FIELD_AMOUNT][index],
               etherAmount: result[FIELD_ETHERAMOUNT][index],
               release: result[FIELD_RELEASE][index],
@@ -57,8 +60,8 @@
     created() {
       web3 = new Web3(web3.currentProvider);
       this.contract = new web3.eth.Contract(abi, this.$root.address);
-      this.setCriterionTime()
-      this.getBuyerReceipt()
+      this.setCriterionTime();
+      this.getBuyerReceipt();
     },
   }
 </script>
