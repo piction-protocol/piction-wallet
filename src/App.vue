@@ -3,7 +3,7 @@
     <h1>Piction Wallet</h1>
     <b-alert show variant="dark">
       <div>Contract address <a target="_blank" class="alert-link"
-                               v-bind:href="getEtherscanURL('/address/' + tokenAddress)">{{tokenAddress}}</a></div>
+                               v-bind:href="getEtherscanURL('/token/' + tokenAddress)">{{tokenAddress}}</a></div>
     </b-alert>
     <Receipt v-for="receipt in receiptList"
              :key="receipt.order_id"

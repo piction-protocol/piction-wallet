@@ -13,6 +13,7 @@
 <script>
   import Web3 from 'web3'
   import abi from './../assets/abi/Product.json';
+  import moment from 'moment'
 
   export default {
     name: 'Receipt',
@@ -49,7 +50,7 @@
             } else {
               let unlockTime = Number(this.criterionTime)
                 + Number(lockup * 24 * 60 * 60 * 1000);
-              this.stateLabelName = `대기 (${new Date(unlockTime).toLocaleString()} 지급 예정)`;
+              this.stateLabelName = moment(unlockTime).format('YYYY년 MM월 DD일 지급예정')
               this.stateLabelColor = 'dark';
             }
           }
