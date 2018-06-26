@@ -1,7 +1,10 @@
 <template>
   <div id="app">
     <h1>Piction Wallet</h1>
-    <div>Token address : {{tokenAddress}}</div>
+    <b-alert show variant="dark">
+      <div>Contract address <a target="_blank" class="alert-link"
+                               v-bind:href="getEtherscanURL('/address/' + tokenAddress)">{{tokenAddress}}</a></div>
+    </b-alert>
     <Receipt v-for="receipt in receiptList"
              :key="receipt.order_id"
              :receipt="receipt"
@@ -27,7 +30,6 @@
         criterionTime: null,
         receiptList: [],
         tokenAddress: null,
-        tokenAddress: null
       }
     },
     methods: {
@@ -55,7 +57,6 @@
       },
       setTokenAddress() {
         this.contract.methods.getTokenAddress().call((err, address) => {
-          console.log('address', address)
           this.tokenAddress = address;
         });
       },
